@@ -1,0 +1,82 @@
+.form {
+  border: 1px solid black;
+  width: 400px;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.topMenu {
+  display: flex;
+  justify-content: space-between;
+  width: 90%;
+  margin: 0 auto;
+  margin-bottom: 10px;
+}
+
+.removeButton {
+  padding: 0px 5px;
+  border: 1px solid black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.inputArea {
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  width: 90%;
+}
+
+.inputArea input {
+  height: 30px;
+}
+
+.buttonArea {
+  display: flex;
+  width: 400px;
+  margin-top: 5px;
+}
+
+.buttonArea button {
+  padding: 5px 10px;
+  border-left: 1px solid black;
+  border-top: 1px solid black;
+}
+
+.addButton {
+  margin-right: 10px;
+  background-color: white;
+  cursor: pointer;
+}
+
+.confirmButton.active {
+  background-color: white;
+  cursor: pointer;
+}
+
+.confirmButton.active:active {
+  background-color: black;
+}
+
+.contentArea {
+  margin-top: 20px;
+  background-color: #e2e2e2;
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.contentList {
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+}
+
+.contentItem {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
