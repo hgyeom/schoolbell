@@ -8,10 +8,13 @@ function App() {
   const [isConfirmEnabled, setConfirmEnabled] = useState(false);
   const [formData, setFormData] = useState(null);
 
+  useEffect(() => {
+    handleNameDuplicate(); // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [users]);
+
   // confirm 활성화를 위해 사용
   useEffect(() => {
-    checkConfirm();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    checkConfirm(); // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [users, nameErrors, passwordErrors]);
 
   // 폼 추가
@@ -24,9 +27,10 @@ function App() {
     const newUsers = [...users];
     newUsers.splice(index, 1);
     setUsers(newUsers);
+    handleNameDuplicate();
   };
 
-  // 이름 변경. 에러를 띄워줄 폼을 특정하기 위해 index 사용.
+  // 이름 변경.
   const handleNameChange = (index, newName) => {
     const newUsers = [...users];
     newUsers[index].name = newName;
@@ -34,21 +38,21 @@ function App() {
     validateName(index, newName);
   };
 
-  // 이름 중복 검사.
-  const handleNameBlur = (index, newName) => {
-    const nameCheck = (index, name) => {
-      // some은 하나라도 true라면 true를 반환한다.
-      return users.some((user, i) => i !== index && user.name === name);
-    };
+  // 이름 중복 검사. 에러를 띄워줄 폼을 특정하기 위해 index 사용.
+  const handleNameDuplicate = () => {
+    const newErrors = Array(users.length).fill('');
 
-    const newErrors = users.map((user, i) => {
-      if (i === index && nameCheck(index, newName)) {
-        return `The name '${newName}' is duplicated.`;
+    users.forEach((user, index) => {
+      // 이름이 비어있을 때는 중복 검사를 하지 않음
+      if (user.name.trim() !== '') {
+        const isDuplicated = users.some(
+          (otherUser, i) => i !== index && otherUser.name === user.name
+        );
+
+        if (isDuplicated) {
+          newErrors[index] = `The name '${user.name}' is duplicated.`;
+        }
       }
-      if (i !== index && user.name === newName) {
-        return `The name '${newName}' is duplicated.`;
-      }
-      return '';
     });
 
     setNameErrors(newErrors);
@@ -143,7 +147,7 @@ function App() {
               type="text"
               value={user.name}
               onChange={(e) => handleNameChange(index, e.target.value)}
-              onBlur={(e) => handleNameBlur(index, e.target.value)}
+              // onBlur={(e) => handleNameBlur(index, e.target.value)}
             />
             {nameErrors[index] && (
               <div style={{ color: 'red' }}>{nameErrors[index]}</div>
